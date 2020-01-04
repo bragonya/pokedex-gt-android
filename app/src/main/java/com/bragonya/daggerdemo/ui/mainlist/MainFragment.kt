@@ -1,13 +1,15 @@
 package com.bragonya.daggerdemo.ui.mainlist
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 
 import com.bragonya.daggerdemo.R
 import com.bragonya.daggerdemo.application.App
@@ -20,6 +22,7 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
     @Inject
     lateinit var viewModel: MainViewModel
     var adapter = MainPokemonListAdapter(this)
+    lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +30,10 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
 
     ): View? {
         injection()
+        (requireActivity() as AppCompatActivity).run {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }
+        navController = findNavController(requireActivity(), R.id.mainListFragment)
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -48,7 +55,7 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
     }
 
     override fun onClick(pokemon: PokeData) {
-        Toast.makeText(requireActivity(), pokemon.name,Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.main_to_detail)
     }
 
 }

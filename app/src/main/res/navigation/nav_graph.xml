@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.bragonya.daggerdemo.ui.mainlist.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/main_to_detail"
+            app:destination="@id/pokemonDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonDetail"
+        android:name="com.bragonya.daggerdemo.PokemonDetail"
+        android:label="fragment_pokemon_detail"
+        tools:layout="@layout/fragment_pokemon_detail" />
+</navigation>
