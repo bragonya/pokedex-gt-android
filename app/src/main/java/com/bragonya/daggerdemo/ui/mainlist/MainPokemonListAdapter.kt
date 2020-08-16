@@ -41,7 +41,7 @@ class MainPokemonListAdapter (
         fun bind(position: Int) = view.apply {
             val pokemon = list[position]
             setOnClickListener{ click.onClick(pokemon)}
-            pokeName.text = pokemon.name
+            pokeName.text = pokemon.name.capitalize()
             Log.d("getting",pokemon.imageURL)
             Picasso.with(view.context).load(pokemon.imageURL).into(pokeImage)
         }
