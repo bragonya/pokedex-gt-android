@@ -3,12 +3,15 @@ package com.bragonya.daggerdemo.network
 import com.bragonya.daggerdemo.utils.BASE_URL_POKE_API
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
+@InstallIn(ApplicationComponent::class)
 class NetworkModule {
     @Provides
     fun providePokeAPI(client: OkHttpClient) = Retrofit.Builder()
