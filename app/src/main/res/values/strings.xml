@@ -1,7 +1,15 @@
 <resources>
-    <string name="app_name">DaggerDemo</string>
+    <string name="app_name">PokeDex GT</string>
     <string name="pokemon_image">Pokemon image</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_content_description">Choose as favorite pokemon</string>
+    <string name="pokemon_stats">stats</string>
+    <string name="pokemon_type">type</string>
+    <string name="pokemon_stat_hp">hp</string>
+    <string name="pokemon_stat_attack">attack</string>
+    <string name="pokemon_stat_defense">defense</string>
+    <string name="pokemon_stat_special_attack">SPECIAL ATTACK</string>
+    <string name="pokemon_stat_special_defense">SPECIAL DEFESE</string>
 </resources>

@@ -50,7 +50,8 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
     }
 
     override fun onClick(pokemon: PokeData) {
-        navController.navigate(R.id.main_to_detail)
+        val action = MainFragmentDirections.mainToDetail(pokemon)
+        navController.navigate(action)
     }
 
 }
