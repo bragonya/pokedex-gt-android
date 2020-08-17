@@ -5,6 +5,7 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".ui.detail.PokemonDetailFragment">
 
 
@@ -12,8 +13,10 @@
         android:id="@+id/front_image"
         android:layout_width="0dp"
         android:layout_height="209dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/pokedex_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintDimensionRatio=""
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -26,8 +29,10 @@
         android:id="@+id/back_image"
         android:layout_width="0dp"
         android:layout_height="213dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/pokedex_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,6 +50,7 @@
 
     <TextView
         android:id="@+id/name"
+        android:textColor="#FFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -57,15 +63,14 @@
 
     <ImageView
         android:id="@+id/favorite"
-        android:layout_width="62dp"
-        android:layout_height="58dp"
+        android:layout_width="75dp"
+        android:layout_height="81dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/info_background"
         android:clickable="true"
         android:contentDescription="@string/fab_content_description"
         android:focusable="true"
         android:padding="5dp"
-        android:src="@drawable/ic_star_white"
+        android:src="@mipmap/poke_launcher"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -77,20 +82,21 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="205dp"
-        android:layout_marginEnd="206dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="205dp"
+        app:layout_constraintGuide_percent="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/holder_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -131,7 +137,7 @@
             android:layout_height="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="hp"
+            android:text="@string/pokemon_stat_hp"
             android:textAlignment="center"
             android:textAllCaps="true"
             app:layout_constraintEnd_toStartOf="@+id/hpBar"
@@ -145,7 +151,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="attack"
+            android:text="@string/pokemon_stat_attack"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textSize="10sp"
@@ -173,7 +179,7 @@
             android:layout_height="12dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="DEFENSE"
+            android:text="@string/pokemon_stat_defense"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textSize="8sp"
@@ -203,7 +209,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="SPECIAL ATTACK"
+            android:text="@string/pokemon_stat_special_attack"
             android:textAlignment="center"
             android:textSize="8sp"
             app:layout_constraintEnd_toStartOf="@+id/barSpecialAttack"
@@ -218,7 +224,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="SPECIAL DEFESE"
+            android:text="@string/pokemon_stat_special_defense"
             android:textAlignment="center"
             android:textSize="8sp"
             app:layout_constraintEnd_toStartOf="@+id/barSpecialDefense"
@@ -256,6 +262,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/holder_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -275,11 +285,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
