@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(val pokeRepository: PokeRepository): ViewModel() {
+class MainViewModel @Inject constructor(private val pokeRepository: PokeRepository): ViewModel() {
 
     val pokeList = pokeRepository.listOfPokemon
 

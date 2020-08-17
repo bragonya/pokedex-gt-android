@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -48,14 +47,15 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
-        viewModel.pokeList.observe(this, Observer {
+        viewModel.pokeList.observe(viewLifecycleOwner, Observer {
             adapter.list = it
         })
         viewModel.updatePokeList()
     }
 
     override fun onClick(pokemon: PokeData) {
-        navController.navigate(R.id.main_to_detail)
+        val action = MainFragmentDirections.mainToDetail(pokemon)
+        navController.navigate(action)
     }
 
 }
