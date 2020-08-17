@@ -10,28 +10,23 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bragonya.daggerdemo.R
-import com.bragonya.daggerdemo.application.App
 import com.bragonya.daggerdemo.model.PokemonDetail
-import com.bragonya.daggerdemo.ui.mainlist.MainViewModel
 import com.bragonya.daggerdemo.utils.*
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
-import kotlinx.android.synthetic.main.poke_holder.view.*
-import javax.inject.Inject
 
 
-/**
- * A simple [Fragment] subclass.
- */
+@AndroidEntryPoint
 class PokemonDetailFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: PokemonDetailViewModel
+    private val viewModel: PokemonDetailViewModel by viewModels()
     lateinit var navController: NavController
     val args: PokemonDetailFragmentArgs by navArgs()
 
@@ -39,7 +34,6 @@ class PokemonDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        injection()
         // Inflate the layout for this fragment
         (requireActivity() as AppCompatActivity).run {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -87,9 +81,5 @@ class PokemonDetailFragment : Fragment() {
         barSpecialDefense.progress = detail.getStatValue(SPECIAL_DEFENSE)
         Picasso.with(view?.context).load(detail.getBackImage()).into(back_image)
         Picasso.with(view?.context).load(detail.getFrontImage()).into(front_image)
-    }
-
-    private fun injection(){
-        App.rootFactory.getDetailFragment().inject(this)
     }
 }

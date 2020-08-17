@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 
 import com.bragonya.daggerdemo.R
-import com.bragonya.daggerdemo.application.App
 import com.bragonya.daggerdemo.model.PokeData
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
     var adapter = MainPokemonListAdapter(this)
     lateinit var navController: NavController
 
@@ -28,7 +29,6 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
         savedInstanceState: Bundle?
 
     ): View? {
-        injection()
         (requireActivity() as AppCompatActivity).run {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
@@ -38,10 +38,6 @@ class MainFragment : Fragment(), MainPokemonListAdapter.PokeListClickListener {
 
     private fun setupRecyclerView(){
         pokeListRecycler.adapter = adapter
-    }
-
-    private fun injection(){
-        App.rootFactory.getMainFragment().inject(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

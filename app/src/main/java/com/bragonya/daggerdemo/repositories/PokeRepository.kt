@@ -6,6 +6,8 @@ import com.bragonya.daggerdemo.model.PokeData
 import com.bragonya.daggerdemo.model.PokemonDetail
 import com.bragonya.daggerdemo.network.PokeAPI
 import com.bragonya.daggerdemo.utils.NUMBER_OF_POKES
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Inject
 
 class PokeRepository @Inject constructor(val service: PokeAPI){
