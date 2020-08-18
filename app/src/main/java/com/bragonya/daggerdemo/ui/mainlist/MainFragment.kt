@@ -44,19 +44,12 @@ class MainFragment : Fragment(), MainPokemonListPagingAdapter.PokeListClickListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(savedInstanceState?.getBoolean("needToReload", true) != false) {
-            setupRecyclerView()
-            viewModel.updatePokeList().observe(viewLifecycleOwner, Observer {
-                lifecycleScope.launch {
-                    adapter.submitData(it)
-                }
-            })
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean("needToReload", false)
-        super.onSaveInstanceState(outState)
+        setupRecyclerView()
+        viewModel.updatePokeList().observe(viewLifecycleOwner, Observer {
+            lifecycleScope.launch {
+                adapter.submitData(it)
+            }
+        })
     }
 
     override fun onClick(pokemon: PokeData) {
