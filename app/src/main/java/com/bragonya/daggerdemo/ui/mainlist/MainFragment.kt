@@ -38,23 +38,28 @@ class MainFragment : Fragment(), MainPokemonListPagingAdapter.PokeListClickListe
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
-    private fun setupRecyclerView(){
-        pokeListRecycler.adapter = adapter
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        viewModel.updatePokeList().observe(viewLifecycleOwner, Observer {
-            lifecycleScope.launch {
-                adapter.submitData(it)
-            }
-        })
+
+        val fromDetail = navController.currentBackStackEntry
+            ?.savedStateHandle?.get<Boolean>("from_detail") ?: false
+        if(!fromDetail) {
+            viewModel.updatePokeList().observe(viewLifecycleOwner, Observer {
+                lifecycleScope.launch {
+                    adapter.submitData(it)
+                }
+            })
+        }
     }
 
     override fun onClick(pokemon: PokeData) {
         val action = MainFragmentDirections.mainToDetail(pokemon)
         navController.navigate(action)
+    }
+
+    private fun setupRecyclerView(){
+        pokeListRecycler.adapter = adapter
     }
 
 }
