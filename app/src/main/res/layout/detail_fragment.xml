@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    app:layoutDescription="@xml/detail_fragment_scene">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/up_panel"
@@ -66,7 +66,7 @@
         android:layout_height="0dp"
         android:background="@drawable/pokedex_detail_background"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/back_panel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -78,9 +78,7 @@
             android:text="Charizart"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="#FFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="#FFF" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,9 +86,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
@@ -312,11 +310,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/up_panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/up_panel"
-        app:layout_editor_absoluteX="359dp"
-        app:layout_editor_absoluteY="104dp"
-        tools:layout_constraintBottom_creator="0"
-        tools:layout_constraintRight_creator="0"
-        tools:layout_constraintTop_creator="0"
-        android:alpha="1"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
