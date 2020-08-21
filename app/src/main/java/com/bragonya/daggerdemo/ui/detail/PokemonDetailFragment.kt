@@ -42,6 +42,7 @@ class PokemonDetailFragment : Fragment() {
         navController = Navigation.findNavController(requireActivity(),
             R.id.mainListFragment
         )
+        navController.previousBackStackEntry!!.savedStateHandle.set<Boolean>("from_detail", true)
         return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
     }
 
@@ -50,7 +51,7 @@ class PokemonDetailFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    navController.navigateUp()
+                    navController.popBackStack()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -67,7 +68,7 @@ class PokemonDetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            android.R.id.home -> navController.navigateUp()
+            android.R.id.home -> navController.popBackStack()
         }
         return super.onOptionsItemSelected(item)
     }
