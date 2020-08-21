@@ -18,7 +18,7 @@
         android:id="@+id/pokemonDetail"
         android:name="com.bragonya.daggerdemo.ui.detail.PokemonDetailFragment"
         android:label="fragment_pokemon_detail"
-        tools:layout="@layout/fragment_pokemon_detail" >
+        tools:layout="@layout/detail_fragment" >
         <argument
             android:name="PokeData"
             app:argType="com.bragonya.daggerdemo.model.PokeData" />

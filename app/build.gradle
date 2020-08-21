@@ -15,6 +15,7 @@ ext {
     nav_version = "2.3.0"
     dagger_hilt_androidx = '1.0.0-alpha01'
     paging_version = "3.0.0-alpha04"
+    lottie_version = "3.4.0"
 }
 
 android {
@@ -98,6 +99,9 @@ dependencies {
     // For local unit tests
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }
 
 kapt {

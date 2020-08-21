@@ -36,7 +36,7 @@ class MainPokemonListPagingAdapter (
             setOnClickListener{ click.onClick(pokemon)}
             pokeName.text = pokemon.name.capitalize()
             pokemonNumber.text = "No. ${pokemon.pokeNumber}"
-            Picasso.with(view.context).load(pokemon.imageURL).into(pokeImage)
+            Picasso.with(view.context).load(pokemon.imageURL).placeholder( R.drawable.pokeball_animation ).into(pokeImage)
         }
     }
 

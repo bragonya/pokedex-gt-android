@@ -20,7 +20,7 @@ import com.bragonya.daggerdemo.model.PokemonDetail
 import com.bragonya.daggerdemo.utils.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
+import kotlinx.android.synthetic.main.detail_fragment.*
 
 
 @AndroidEntryPoint
@@ -43,7 +43,7 @@ class PokemonDetailFragment : Fragment() {
             R.id.mainListFragment
         )
         navController.previousBackStackEntry!!.savedStateHandle.set<Boolean>("from_detail", true)
-        return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
+        return inflater.inflate(R.layout.detail_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
