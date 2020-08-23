@@ -31,13 +31,6 @@
                 motion:attributeName="alpha"
                 motion:customFloatValue="1.0" />
         </Constraint>
-        <Constraint
-            android:id="@+id/back_panel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toBottomOf="parent"/>
         />
 
         <Constraint
@@ -77,17 +70,6 @@
                 motion:attributeName="alpha"
                 motion:customFloatValue="0" />
         </Constraint>
-        <Constraint
-                android:id="@+id/back_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                motion:layout_constraintEnd_toStartOf="parent"
-                motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
             android:id="@+id/back_image"
