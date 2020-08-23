@@ -117,6 +117,6 @@ class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickList
     }
 
     override fun onClick(pokemon: PokeData) {
-        TODO("Not yet implemented")
+        viewModel.getPokemon(pokemon.pokeNumber)
     }
 }
