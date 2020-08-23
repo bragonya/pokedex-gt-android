@@ -1,7 +1,10 @@
 package com.bragonya.daggerdemo.ui.detail
 
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,19 +19,21 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bragonya.daggerdemo.R
-import com.bragonya.daggerdemo.model.PokemonDetail
+import com.bragonya.daggerdemo.model.*
 import com.bragonya.daggerdemo.utils.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 @AndroidEntryPoint
-class PokemonDetailFragment : Fragment() {
+class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickListener {
 
     private val viewModel: PokemonDetailViewModel by viewModels()
     lateinit var navController: NavController
     val args: PokemonDetailFragmentArgs by navArgs()
+    val adapter = EvolutionListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +64,12 @@ class PokemonDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.pokemon.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        setupRecyclerView()
+        viewModel.pokemon.observe(viewLifecycleOwner, Observer {
+            updateStatsAndPhoto(it.pokemonDetail)
+            updateEvolutionChain(it.pokemonEvolutionChain.chain)
+            updateColor(it.pokemonSpecie)
+        })
         viewModel.getPokemon(args.PokeData.pokeNumber)
         favorite.setOnClickListener{
             Toast.makeText(view.context, "You caught an ${args.PokeData.name.capitalize()}", Toast.LENGTH_SHORT).show()
@@ -73,7 +83,7 @@ class PokemonDetailFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun updateUI(detail: PokemonDetail){
+    private fun updateStatsAndPhoto(detail: PokemonDetail){
         name.text = detail.name
         hpBar.progress = detail.getStatValue(HP)
         barAttack.progress = detail.getStatValue(ATTACK)
@@ -82,5 +92,31 @@ class PokemonDetailFragment : Fragment() {
         barSpecialDefense.progress = detail.getStatValue(SPECIAL_DEFENSE)
         Picasso.with(view?.context).load(detail.getBackImage()).into(back_image)
         Picasso.with(view?.context).load(detail.getFrontImage()).into(front_image)
+    }
+
+    private fun setupRecyclerView(){
+        recycler_evolution.adapter = adapter
+    }
+
+    private fun updateEvolutionChain(pokemonEvolutionChain: EvolutionChain) {
+        val myEvolutions = listOf(pokemonEvolutionChain.species) + evolution(pokemonEvolutionChain.evolvesTo)
+        adapter.list = myEvolutions
+    }
+
+    private fun updateColor(pokemonSpecie: PokemonSpecie) {
+        //parent.setBackgroundColor(Color.parseColor(pokemonSpecie.color.name))
+    }
+
+    private fun evolution(evolutions: List<Evolution>): List<PokeData>{
+        return if( evolutions.isEmpty() )
+            evolutions.map { it.species }
+        else {
+            val list = evolutions.map { evolution(it.evolvesTo) }
+            evolutions.map { it.species } + list.flatten()
+        }
+    }
+
+    override fun onClick(pokemon: PokeData) {
+        TODO("Not yet implemented")
     }
 }

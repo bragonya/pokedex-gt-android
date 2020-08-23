@@ -16,9 +16,7 @@ import javax.inject.Inject
 
 class PokeRepository @Inject constructor(val service: PokeAPI){
 
-    val pokemonDetail = MutableLiveData<PokemonDetail>()
-
-    fun getPokemonFromNetwork(): LiveData<PagingData<PokeData>>{
+    fun getPokemonDetailsFromNetwork(): LiveData<PagingData<PokeData>>{
         return Pager(
             config = PagingConfig(
                 pageSize = NUMBER_OF_POKES,
@@ -29,8 +27,11 @@ class PokeRepository @Inject constructor(val service: PokeAPI){
     }
 
     @WorkerThread
-    suspend fun getPokemonFromNetwork(id: Int){
-        val pokemon = service.getPokemonDetail(id)
-        pokemonDetail.postValue(pokemon)
-    }
+    suspend fun getPokemonDetailsFromNetwork(id: Int)  = service.getPokemonDetail(id)
+
+    @WorkerThread
+    suspend fun getPokemonSpecie(id: Int) = service.getPokemonSpecies(id)
+
+    @WorkerThread
+    suspend fun getPokemonEvolutionChain(id: Int) = service.getEvolutionChain(id)
 }

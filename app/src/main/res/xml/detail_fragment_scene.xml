@@ -9,7 +9,7 @@
         motion:duration="500">
 
         <OnSwipe
-            motion:touchAnchorId="@+id/middle_panel"
+            motion:touchRegionId="@+id/middle_panel"
             motion:touchAnchorSide="top"
             motion:dragDirection="dragDown" />
        <KeyFrameSet>
