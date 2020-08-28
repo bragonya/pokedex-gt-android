@@ -28,12 +28,14 @@ import kotlinx.android.synthetic.main.main_fragment.*
 
 
 @AndroidEntryPoint
-class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickListener {
+class PokemonDetailFragment : Fragment() {
 
     private val viewModel: PokemonDetailViewModel by viewModels()
     lateinit var navController: NavController
     val args: PokemonDetailFragmentArgs by navArgs()
-    val adapter = EvolutionListAdapter(this)
+    val adapter = EvolutionListAdapter { pokemon ->
+        viewModel.getPokemon(pokemon.pokeNumber)
+    } //it is supported due to SAM Interface (only kotlin 1.4)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,7 +108,5 @@ class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickList
         //parent.setBackgroundColor(Color.parseColor(pokemonSpecie.color.name))
     }
 
-    override fun onClick(pokemon: PokeData) {
-        viewModel.getPokemon(pokemon.pokeNumber)
-    }
+
 }

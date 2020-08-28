@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bragonya.daggerdemo.R
 import com.bragonya.daggerdemo.model.PokeData
+import com.bragonya.daggerdemo.ui.IPokeListClickListener
 import com.bragonya.daggerdemo.utils.inflate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.poke_holder.view.*
 
 class MainPokemonListPagingAdapter (
-    private val click: PokeListClickListener
+    private val click: IPokeListClickListener
 ): PagingDataAdapter<PokeData, MainPokemonListPagingAdapter.PokeListHolder>(POKEMON_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokeListHolder {
@@ -30,7 +31,7 @@ class MainPokemonListPagingAdapter (
 
     inner class PokeListHolder(
         private val view: View,
-        private val click: PokeListClickListener
+        private val click: IPokeListClickListener
     ): RecyclerView.ViewHolder(view) {
         fun bind(pokemon: PokeData) = view.apply {
             setOnClickListener{ click.onClick(pokemon)}
@@ -38,10 +39,6 @@ class MainPokemonListPagingAdapter (
             pokemonNumber.text = "No. ${pokemon.pokeNumber}"
             Picasso.with(view.context).load(pokemon.imageURL).placeholder( R.drawable.pokeball_animation ).into(pokeImage)
         }
-    }
-
-    interface PokeListClickListener {
-        fun onClick(pokemon: PokeData)
     }
 
     companion object {
