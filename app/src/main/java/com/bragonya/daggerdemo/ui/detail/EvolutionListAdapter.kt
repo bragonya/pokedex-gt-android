@@ -1,9 +1,7 @@
-package com.bragonya.daggerdemo.ui.mainlist
+package com.bragonya.daggerdemo.ui.detail
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bragonya.daggerdemo.R
 import com.bragonya.daggerdemo.model.PokeData
@@ -12,9 +10,15 @@ import com.bragonya.daggerdemo.utils.inflate
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.poke_holder.view.*
 
-class MainPokemonListPagingAdapter (
+class EvolutionListAdapter (
     private val click: IPokeListClickListener
-): PagingDataAdapter<PokeData, MainPokemonListPagingAdapter.PokeListHolder>(POKEMON_COMPARATOR) {
+): RecyclerView.Adapter<EvolutionListAdapter.PokeListHolder>() {
+
+    var list = listOf<PokeData>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokeListHolder {
         return PokeListHolder(
@@ -24,12 +28,11 @@ class MainPokemonListPagingAdapter (
     }
 
     override fun onBindViewHolder(holder: PokeListHolder, position: Int) {
-        val pokemon = getItem(position)
-        if (pokemon != null)
-            holder.bind(pokemon)
+        val pokemon = list[position]
+        holder.bind(pokemon)
     }
 
-    inner class PokeListHolder(
+    class PokeListHolder(
         private val view: View,
         private val click: IPokeListClickListener
     ): RecyclerView.ViewHolder(view) {
@@ -41,13 +44,5 @@ class MainPokemonListPagingAdapter (
         }
     }
 
-    companion object {
-        private val POKEMON_COMPARATOR = object : DiffUtil.ItemCallback<PokeData>() {
-            override fun areItemsTheSame(oldItem: PokeData, newItem: PokeData): Boolean =
-                oldItem.pokeNumber == newItem.pokeNumber
-
-            override fun areContentsTheSame(oldItem: PokeData, newItem: PokeData): Boolean =
-                oldItem == newItem
-        }
-    }
+    override fun getItemCount() = list.size
 }

@@ -20,14 +20,13 @@
     <ImageView
         android:id="@+id/pokeImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="127dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/pokemon_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pokeName"

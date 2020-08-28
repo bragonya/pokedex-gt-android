@@ -21,10 +21,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), MainPokemonListPagingAdapter.PokeListClickListener {
+class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
-    var adapter = MainPokemonListPagingAdapter(this)
+    var adapter = MainPokemonListPagingAdapter { pokemon ->
+        val action = MainFragmentDirections.mainToDetail(pokemon)
+        navController.navigate(action)
+    }
     lateinit var navController: NavController
 
     override fun onCreateView(
@@ -51,11 +54,6 @@ class MainFragment : Fragment(), MainPokemonListPagingAdapter.PokeListClickListe
                 }
             })
         }
-    }
-
-    override fun onClick(pokemon: PokeData) {
-        val action = MainFragmentDirections.mainToDetail(pokemon)
-        navController.navigate(action)
     }
 
     private fun setupRecyclerView(){

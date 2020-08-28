@@ -1,7 +1,10 @@
 package com.bragonya.daggerdemo.ui.detail
 
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,11 +19,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bragonya.daggerdemo.R
-import com.bragonya.daggerdemo.model.PokemonDetail
+import com.bragonya.daggerdemo.model.*
 import com.bragonya.daggerdemo.utils.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
+import kotlinx.android.synthetic.main.detail_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 @AndroidEntryPoint
@@ -29,6 +33,9 @@ class PokemonDetailFragment : Fragment() {
     private val viewModel: PokemonDetailViewModel by viewModels()
     lateinit var navController: NavController
     val args: PokemonDetailFragmentArgs by navArgs()
+    val adapter = EvolutionListAdapter { pokemon ->
+        viewModel.getPokemon(pokemon.pokeNumber)
+    } //it is supported due to SAM Interface (only kotlin 1.4)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +50,7 @@ class PokemonDetailFragment : Fragment() {
             R.id.mainListFragment
         )
         navController.previousBackStackEntry!!.savedStateHandle.set<Boolean>("from_detail", true)
-        return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
+        return inflater.inflate(R.layout.detail_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +66,12 @@ class PokemonDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.pokemon.observe(viewLifecycleOwner, Observer { updateUI(it) })
+        setupRecyclerView()
+        viewModel.pokemon.observe(viewLifecycleOwner, Observer {
+            updateStatsAndPhoto(it.pokemonDetail)
+            updateEvolutionChain(it.pokemonEvolutionChain)
+            updateColor(it.pokemonSpecie)
+        })
         viewModel.getPokemon(args.PokeData.pokeNumber)
         favorite.setOnClickListener{
             Toast.makeText(view.context, "You caught an ${args.PokeData.name.capitalize()}", Toast.LENGTH_SHORT).show()
@@ -73,7 +85,7 @@ class PokemonDetailFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun updateUI(detail: PokemonDetail){
+    private fun updateStatsAndPhoto(detail: PokemonDetail){
         name.text = detail.name
         hpBar.progress = detail.getStatValue(HP)
         barAttack.progress = detail.getStatValue(ATTACK)
@@ -83,4 +95,18 @@ class PokemonDetailFragment : Fragment() {
         Picasso.with(view?.context).load(detail.getBackImage()).into(back_image)
         Picasso.with(view?.context).load(detail.getFrontImage()).into(front_image)
     }
+
+    private fun setupRecyclerView(){
+        recycler_evolution.adapter = adapter
+    }
+
+    private fun updateEvolutionChain(myEvolutions: List<PokeData>) {
+        adapter.list = myEvolutions
+    }
+
+    private fun updateColor(pokemonSpecie: PokemonSpecie) {
+        //parent.setBackgroundColor(Color.parseColor(pokemonSpecie.color.name))
+    }
+
+
 }
