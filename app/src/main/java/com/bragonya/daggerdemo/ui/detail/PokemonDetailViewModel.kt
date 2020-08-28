@@ -5,10 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bragonya.daggerdemo.model.EvolutionChain
-import com.bragonya.daggerdemo.model.EvolutionRoot
-import com.bragonya.daggerdemo.model.PokemonDetail
-import com.bragonya.daggerdemo.model.PokemonSpecie
+import com.bragonya.daggerdemo.model.*
 import com.bragonya.daggerdemo.repositories.PokeRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -28,7 +25,7 @@ class PokemonDetailViewModel @ViewModelInject constructor(private val pokeReposi
         pokemon.postValue(PokemonDetailInformation(
             pokemonDetail.await(),
             pokemonSpecie,
-            pokemonEvolutionChain.await()
+            processEvolutionChain(pokemonEvolutionChain.await().chain)
         ))
 
     }
@@ -36,7 +33,20 @@ class PokemonDetailViewModel @ViewModelInject constructor(private val pokeReposi
     inner class PokemonDetailInformation(
         val pokemonDetail:PokemonDetail,
         val pokemonSpecie: PokemonSpecie,
-        val pokemonEvolutionChain: EvolutionRoot
+        val pokemonEvolutionChain: List<PokeData>
     )
+
+    private fun processEvolutionChain(pokemonEvolutionChain: EvolutionChain) =
+        listOf(pokemonEvolutionChain.species) + evolution(pokemonEvolutionChain.evolvesTo)
+
+
+    private fun evolution(evolutions: List<Evolution>): List<PokeData>{
+        return if( evolutions.isEmpty() )
+            evolutions.map { it.species }
+        else {
+            val list = evolutions.map { evolution(it.evolvesTo) }
+            evolutions.map { it.species } + list.flatten()
+        }
+    }
 
 }

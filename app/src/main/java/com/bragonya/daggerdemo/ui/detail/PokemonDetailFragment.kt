@@ -67,7 +67,7 @@ class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickList
         setupRecyclerView()
         viewModel.pokemon.observe(viewLifecycleOwner, Observer {
             updateStatsAndPhoto(it.pokemonDetail)
-            updateEvolutionChain(it.pokemonEvolutionChain.chain)
+            updateEvolutionChain(it.pokemonEvolutionChain)
             updateColor(it.pokemonSpecie)
         })
         viewModel.getPokemon(args.PokeData.pokeNumber)
@@ -98,22 +98,12 @@ class PokemonDetailFragment : Fragment(), EvolutionListAdapter.PokeListClickList
         recycler_evolution.adapter = adapter
     }
 
-    private fun updateEvolutionChain(pokemonEvolutionChain: EvolutionChain) {
-        val myEvolutions = listOf(pokemonEvolutionChain.species) + evolution(pokemonEvolutionChain.evolvesTo)
+    private fun updateEvolutionChain(myEvolutions: List<PokeData>) {
         adapter.list = myEvolutions
     }
 
     private fun updateColor(pokemonSpecie: PokemonSpecie) {
         //parent.setBackgroundColor(Color.parseColor(pokemonSpecie.color.name))
-    }
-
-    private fun evolution(evolutions: List<Evolution>): List<PokeData>{
-        return if( evolutions.isEmpty() )
-            evolutions.map { it.species }
-        else {
-            val list = evolutions.map { evolution(it.evolvesTo) }
-            evolutions.map { it.species } + list.flatten()
-        }
     }
 
     override fun onClick(pokemon: PokeData) {
